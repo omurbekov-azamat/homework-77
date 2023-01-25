@@ -1,5 +1,5 @@
 export interface ImageBoard {
-    author: string | null;
+    author: string | 'Anonymous';
     message: string;
     image: string | null;
 }
