@@ -1,10 +1,16 @@
 import React, {useState} from 'react';
-import axiosApi from "../../../axiosApi";
-import {Button, Grid, TextField} from "@mui/material";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks";
+import {selectSendLoading} from "../ImageBoardsSlice";
+import {createImageBoard} from "../imageBoardsThunks";
+import {LoadingButton} from "@mui/lab";
+import {Grid, TextField} from "@mui/material";
 import FileInput from "../../../components/UI/FileInput/FileInput";
 import {ImageBoardMutation} from "../../../types";
 
 const ImageBoardForm = () => {
+    const dispatch = useAppDispatch();
+    const sendLoading = useAppSelector(selectSendLoading);
+
     const [imageBoard, setImageBoard] = useState<ImageBoardMutation>({
         author: '',
         message: '',
@@ -25,16 +31,12 @@ const ImageBoardForm = () => {
 
     const submitFormHandler = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        const formData = new FormData();
-        const keys = Object.keys(imageBoard) as (keyof ImageBoardMutation)[];
-        keys.forEach(key => {
-            const value = imageBoard[key];
-            if (value !== null) {
-                formData.append(key, value);
-            }
+        await dispatch(createImageBoard(imageBoard));
+        setImageBoard({
+            author: '',
+            message: '',
+            image: null,
         });
-        await axiosApi.post('/imageBoards', formData);
     };
 
     return (
@@ -62,16 +64,17 @@ const ImageBoardForm = () => {
                         onChange={fileInputHandler}
                         name='image'
                         label='image'
-                        />
+                    />
                 </Grid>
                 <Grid item xs>
-                    <Button
-                        type="submit"
-                        color="success"
-                        variant="contained"
+                    <LoadingButton
+                        type='submit'
+                        color='secondary'
+                        loading={sendLoading}
+                        variant='contained'
                     >
                         Send
-                    </Button>
+                    </LoadingButton>
                 </Grid>
             </Grid>
         </form>
