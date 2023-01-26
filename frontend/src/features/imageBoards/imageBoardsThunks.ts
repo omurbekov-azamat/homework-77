@@ -1,10 +1,19 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axiosApi from "../../axiosApi";
+import {AppDispatch} from "../../app/store";
 import {ImageBoardMutation} from "../../types";
 
-export const createImageBoard = createAsyncThunk<void, ImageBoardMutation>(
+export const fetchImageBoards = createAsyncThunk<ImageBoardMutation[]>(
+    'imageBoards/fetchAll',
+    async () => {
+        const response = await axiosApi.get<ImageBoardMutation[]>('/imageBoards');
+        return response.data;
+    }
+);
+
+export const createImageBoard = createAsyncThunk<void, ImageBoardMutation, {dispatch: AppDispatch}>(
     'imageBoards/create',
-    async (imageBoard) => {
+    async (imageBoard, thunkAPI) => {
 
         const formData = new FormData();
 
@@ -18,5 +27,7 @@ export const createImageBoard = createAsyncThunk<void, ImageBoardMutation>(
         });
 
         await axiosApi.post('/imageBoards', formData);
+        thunkAPI.dispatch(fetchImageBoards());
     }
 );
+

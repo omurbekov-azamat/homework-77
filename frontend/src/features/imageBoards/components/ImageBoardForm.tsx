@@ -5,6 +5,7 @@ import {createImageBoard} from "../imageBoardsThunks";
 import {LoadingButton} from "@mui/lab";
 import {Grid, TextField} from "@mui/material";
 import FileInput from "../../../components/UI/FileInput/FileInput";
+import {container} from "../../../constants";
 import {ImageBoardMutation} from "../../../types";
 
 const ImageBoardForm = () => {
@@ -40,44 +41,46 @@ const ImageBoardForm = () => {
     };
 
     return (
-        <form onSubmit={submitFormHandler}>
-            <Grid container direction="column" spacing={2}>
-                <Grid item xs>
-                    <TextField
-                        id="author" label="author"
-                        name="author"
-                        value={imageBoard.author}
-                        onChange={inputChangeHandler}
-                    />
+        <div style={container}>
+            <form onSubmit={submitFormHandler}>
+                <Grid container direction="column" spacing={2}>
+                    <Grid item xs>
+                        <TextField
+                            id="author" label="author"
+                            name="author"
+                            value={imageBoard.author}
+                            onChange={inputChangeHandler}
+                        />
+                    </Grid>
+                    <Grid item xs>
+                        <TextField
+                            id="message" label="message"
+                            name="message"
+                            value={imageBoard.message}
+                            onChange={inputChangeHandler}
+                            required
+                        />
+                    </Grid>
+                    <Grid item xs>
+                        <FileInput
+                            onChange={fileInputHandler}
+                            name='image'
+                            label='image'
+                        />
+                    </Grid>
+                    <Grid item xs>
+                        <LoadingButton
+                            type='submit'
+                            color='secondary'
+                            loading={sendLoading}
+                            variant='contained'
+                        >
+                            Send
+                        </LoadingButton>
+                    </Grid>
                 </Grid>
-                <Grid item xs>
-                    <TextField
-                        id="message" label="message"
-                        name="message"
-                        value={imageBoard.message}
-                        onChange={inputChangeHandler}
-                        required
-                    />
-                </Grid>
-                <Grid item xs>
-                    <FileInput
-                        onChange={fileInputHandler}
-                        name='image'
-                        label='image'
-                    />
-                </Grid>
-                <Grid item xs>
-                    <LoadingButton
-                        type='submit'
-                        color='secondary'
-                        loading={sendLoading}
-                        variant='contained'
-                    >
-                        Send
-                    </LoadingButton>
-                </Grid>
-            </Grid>
-        </form>
+            </form>
+        </div>
     );
 };
 
