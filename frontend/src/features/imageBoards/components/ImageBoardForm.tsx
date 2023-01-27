@@ -3,9 +3,8 @@ import {useAppDispatch, useAppSelector} from "../../../app/hooks";
 import {selectSendLoading} from "../ImageBoardsSlice";
 import {createImageBoard} from "../imageBoardsThunks";
 import {LoadingButton} from "@mui/lab";
-import {Grid, TextField} from "@mui/material";
+import {Container, Grid, TextField} from "@mui/material";
 import FileInput from "../../../components/UI/FileInput/FileInput";
-import {container} from "../../../constants";
 import {ImageBoardMutation} from "../../../types";
 
 const ImageBoardForm = () => {
@@ -41,9 +40,9 @@ const ImageBoardForm = () => {
     };
 
     return (
-        <div style={container}>
+        <Container maxWidth='xl' sx={{mb: 2}}>
             <form onSubmit={submitFormHandler}>
-                <Grid container direction="column" spacing={2}>
+                <Grid container direction="row" spacing={10} sx={{alignItems: 'center'}}>
                     <Grid item xs>
                         <TextField
                             id="author" label="author"
@@ -80,7 +79,7 @@ const ImageBoardForm = () => {
                     </Grid>
                 </Grid>
             </form>
-        </div>
+        </Container>
     );
 };
 

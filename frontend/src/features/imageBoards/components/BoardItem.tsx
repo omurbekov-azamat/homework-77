@@ -1,6 +1,6 @@
 import React from 'react';
 import {apiUrl} from "../../../constants";
-import {Grid} from "@mui/material";
+import {Box, Grid} from "@mui/material";
 import {ImageBoardMutation} from "../../../types";
 
 interface Props {
@@ -10,20 +10,21 @@ interface Props {
 const BoardItem: React.FC<Props> = ({item}) => {
     return (
         <Grid item>
-            <div
-                style={{
-                    background: item.image ? `url(${apiUrl + '/' + item.image}) center center no-repeat` : 'white',
-                    width: '200px',
-                    height: '200px',
+            <Box
+                sx={{
                     textAlign: 'center',
-                    boxSizing: "border-box",
-                    padding: '10px',
-                    backgroundSize: "cover",
-                    border: '2px solid red'
-                }}>
+                    minWidth: 200,
+                    minHeight: 200,
+                    p:2,
+                    border: '2px solid red',
+                    wordBreak: 'break-all',
+                    background: item.image ? `url(${apiUrl + '/' + item.image}) center center no-repeat` : 'white',
+                    backgroundSize: 'cover'
+            }}
+            >
                 <p>Author: {item.author}</p>
                 <p>Message: {item.message}</p>
-            </div>
+            </Box>
         </Grid>
     );
 };

@@ -35,8 +35,8 @@ const FileInput: React.FC<Props> = ({onChange, name, label}) => {
                 onChange={onFileChange}
                 ref={inputRef}
             />
-            <Grid container direction="row" alignItems="center">
-                <Grid item xs={3}>
+            <Grid container direction="row" alignItems="center" spacing={2}>
+                <Grid item sm={9}>
                     <TextField
                         disabled
                         label={label}
@@ -44,7 +44,7 @@ const FileInput: React.FC<Props> = ({onChange, name, label}) => {
                         onClick={activateInput}
                     />
                 </Grid>
-                <Grid item>
+                <Grid item xs={1}>
                     <Button
                         type="button"
                         variant="contained"
